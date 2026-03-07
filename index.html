@@ -226,18 +226,12 @@ async function sendMessage() {
   document.getElementById('sendBtn').disabled = true;
 
   const payload = JSON.stringify({
-    model: "claude-haiku-4-5-20251001",
-    max_tokens: 600,
     system: active.personality,
     messages: active.messages.map(m => ({
       role: m.role === 'user' ? 'user' : 'assistant',
       content: m.content
     }))
   });
-
-  console.log("Sending to worker:", WORKER_URL);
-  console.log("Payload length:", payload.length);
-  console.log("Payload preview:", payload.slice(0, 100));
 
   try {
     const res = await fetch(WORKER_URL, {
@@ -246,12 +240,8 @@ async function sendMessage() {
       body: payload
     });
 
-    console.log("Worker response status:", res.status);
-    const responseText = await res.text();
-    console.log("Worker response:", responseText);
-
-    const data = JSON.parse(responseText);
-    const reply = (data.content && data.content[0] && data.content[0].text) ? data.content[0].text : (typeof data.error === 'string' ? data.error : "Немає відповіді");
+    const data = await res.json();
+    const reply = data.reply || data.error || "Немає відповіді";
 
     const t = document.getElementById('typingIndicator');
     if (t) t.remove();
@@ -260,7 +250,6 @@ async function sendMessage() {
     addBubble(aMsg);
     renderContacts();
   } catch(e) {
-    console.error("Error:", e);
     const t = document.getElementById('typingIndicator');
     if (t) t.remove();
     addBubble({role:'assistant', content:'⚠️ '+e.message});
