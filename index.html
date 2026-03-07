@@ -78,7 +78,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 </style>
 </head>
 <body>
-
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5288c1" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -128,39 +127,23 @@ const PHOTOS = {
 };
 
 const CONTACTS = [
-  {
-    id: 1, name: "Станіслав Ніколайчук", photo: PHOTOS[1],
-    personality: "Ти — Станіслав Ніколайчук, хлопчик приблизно 10-12 років. Ти енергійний, веселий, любиш відеоігри та футбол. Говориш коротко і жваво, по-дитячому. Іноді хизуєшся або жартуєш. Спілкуйся тільки українською мовою.",
-    preview: "Привіт! 👋", messages: []
-  },
-  {
-    id: 2, name: "Ірина Ніколайчук", photo: PHOTOS[2],
-    personality: "Ти — Ірина Ніколайчук, доросла жінка. Ти тепла, уважна, турботлива. Цікавишся як справи у співрозмовника. Говориш по-доброму і з повагою. Спілкуйся тільки українською мовою.",
-    preview: "Привіт! Як справи? ❤️", messages: []
-  },
-  {
-    id: 3, name: "Петро Ніколайчук", photo: PHOTOS[3],
-    personality: "Ти — Петро Ніколайчук, дорослий чоловік. Ти спокійний, надійний, практичний. Говориш небагато але по суті. Іноді жартуєш або даєш мудру пораду. Спілкуйся тільки українською мовою.",
-    preview: "Привіт! 💪", messages: []
-  },
-  {
-    id: 4, name: "Уляна Ніколайчук", photo: PHOTOS[4],
-    personality: "Ти — Уляна Ніколайчук, маленька дівчинка 6-8 років. Ти мила і безпосередня, говориш дуже просто і наївно. Розповідаєш про іграшки, малювання, садочок. Відповідай коротко як справжня маленька дитина. Спілкуйся тільки українською мовою.",
-    preview: "Привітик! 🌸", messages: []
-  }
+  { id:1, name:"Станіслав Ніколайчук", photo:PHOTOS[1], personality:"Ти — Станіслав Ніколайчук, хлопчик 10-12 років. Енергійний, веселий, любиш ігри та футбол. Говориш коротко і жваво. Спілкуйся тільки українською.", preview:"Привіт! 👋", messages:[] },
+  { id:2, name:"Ірина Ніколайчук", photo:PHOTOS[2], personality:"Ти — Ірина Ніколайчук, доросла жінка. Тепла, уважна, турботлива. Говориш по-доброму. Спілкуйся тільки українською.", preview:"Привіт! ❤️", messages:[] },
+  { id:3, name:"Петро Ніколайчук", photo:PHOTOS[3], personality:"Ти — Петро Ніколайчук, дорослий чоловік. Спокійний, надійний, практичний. Говориш небагато але по суті. Спілкуйся тільки українською.", preview:"Привіт! 💪", messages:[] },
+  { id:4, name:"Уляна Ніколайчук", photo:PHOTOS[4], personality:"Ти — Уляна Ніколайчук, дівчинка 6-8 років. Мила, безпосередня, говориш дуже просто. Спілкуйся тільки українською.", preview:"Привітик! 🌸", messages:[] }
 ];
 
 const GREETINGS = {
-  1: "О, привіт! Я якраз грав у гру 😄 Що хочеш?",
-  2: "Привіт! Радий тебе бачити ❤️ Як ти?",
-  3: "Привіт. Що сталося?",
-  4: "Привітик! Це я, Уляна! 🌸"
+  1:"О, привіт! Я якраз грав 😄",
+  2:"Привіт! Як ти? ❤️",
+  3:"Привіт. Що сталося?",
+  4:"Привітик! Це я, Уляна! 🌸"
 };
 
 let active = null;
 
 function getTime() {
-  return new Date().toLocaleTimeString('uk-UA', { hour:'2-digit', minute:'2-digit' });
+  return new Date().toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'});
 }
 
 function renderContacts() {
@@ -168,25 +151,18 @@ function renderContacts() {
   list.innerHTML = '';
   CONTACTS.forEach(c => {
     const el = document.createElement('div');
-    el.className = 'contact-item' + (active && active.id === c.id ? ' active' : '');
+    el.className = 'contact-item' + (active && active.id===c.id ? ' active' : '');
     el.onclick = () => openChat(c.id);
-    const last = c.messages[c.messages.length - 1];
-    const prev = last ? (last.role === 'user' ? 'Ви: ' + last.content : last.content) : c.preview;
-    const short = prev.length > 36 ? prev.slice(0,36) + '…' : prev;
-    el.innerHTML = `
-      <img class="avatar" src="${c.photo}" alt="${c.name}">
-      <div class="contact-info">
-        <div class="contact-name">${c.name}</div>
-        <div class="contact-preview">${short}</div>
-      </div>
-      ${last ? `<span class="contact-time">${getTime()}</span>` : ''}
-    `;
+    const last = c.messages[c.messages.length-1];
+    const prev = last ? (last.role==='user' ? 'Ви: '+last.content : last.content) : c.preview;
+    const short = prev.length>36 ? prev.slice(0,36)+'…' : prev;
+    el.innerHTML = `<img class="avatar" src="${c.photo}" alt=""><div class="contact-info"><div class="contact-name">${c.name}</div><div class="contact-preview">${short}</div></div>${last?'<span class="contact-time">'+getTime()+'</span>':''}`;
     list.appendChild(el);
   });
 }
 
 function openChat(id) {
-  active = CONTACTS.find(c => c.id === id);
+  active = CONTACTS.find(c=>c.id===id);
   document.getElementById('welcomeScreen').style.display = 'none';
   document.getElementById('activeChatView').style.display = 'flex';
   document.getElementById('headerAvatar').src = active.photo;
@@ -202,7 +178,7 @@ function renderMessages() {
   const c = document.getElementById('messagesContainer');
   c.innerHTML = '<div class="date-divider"><span>Сьогодні</span></div>';
   if (!active.messages.length) {
-    addBubble({ role:'assistant', content: GREETINGS[active.id] }, false);
+    addBubble({role:'assistant', content:GREETINGS[active.id]}, false);
   } else {
     active.messages.forEach(m => addBubble(m, false));
   }
@@ -214,7 +190,7 @@ function addBubble(msg, scroll=true) {
   const t = document.getElementById('typingIndicator');
   if (t) t.remove();
   const div = document.createElement('div');
-  div.className = 'message ' + (msg.role === 'user' ? 'out' : 'in');
+  div.className = 'message '+(msg.role==='user'?'out':'in');
   div.innerHTML = `<div class="msg-bubble">${msg.content}<div class="msg-time">${getTime()}${msg.role==='user'?'<span class="msg-status">✓✓</span>':''}</div></div>`;
   c.appendChild(div);
   if (scroll) scrollDown();
@@ -225,14 +201,14 @@ function showTyping() {
   const div = document.createElement('div');
   div.className = 'typing-indicator show';
   div.id = 'typingIndicator';
-  div.innerHTML = `<div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  div.innerHTML = '<div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
   c.appendChild(div);
   scrollDown();
 }
 
 function scrollDown() {
   const c = document.getElementById('messagesContainer');
-  setTimeout(() => c.scrollTop = c.scrollHeight, 50);
+  setTimeout(()=>c.scrollTop=c.scrollHeight, 50);
 }
 
 async function sendMessage() {
@@ -242,47 +218,52 @@ async function sendMessage() {
   input.value = '';
   input.style.height = 'auto';
 
-  const userMsg = { role:'user', content: text };
+  const userMsg = {role:'user', content:text};
   active.messages.push(userMsg);
   addBubble(userMsg);
   renderContacts();
   showTyping();
   document.getElementById('sendBtn').disabled = true;
 
+  const payload = JSON.stringify({
+    model: "claude-haiku-4-5-20251001",
+    max_tokens: 600,
+    system: active.personality,
+    messages: active.messages.map(m => ({
+      role: m.role === 'user' ? 'user' : 'assistant',
+      content: m.content
+    }))
+  });
+
+  console.log("Sending to worker:", WORKER_URL);
+  console.log("Payload length:", payload.length);
+  console.log("Payload preview:", payload.slice(0, 100));
+
   try {
-    const payload = {
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 600,
-      system: active.personality,
-      messages: active.messages.map(m => ({
-        role: m.role === 'user' ? 'user' : 'assistant',
-        content: m.content
-      }))
-    };
-
-    const payloadStr = JSON.stringify(payload);
-
     const res = await fetch(WORKER_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Content-Length": String(new Blob([payloadStr]).size)
-      },
-      body: payloadStr
+      headers: { "Content-Type": "application/json" },
+      body: payload
     });
 
-    const data = await res.json();
-    const reply = data.content?.[0]?.text || "Вибач, не можу відповісти зараз...";
+    console.log("Worker response status:", res.status);
+    const responseText = await res.text();
+    console.log("Worker response:", responseText);
+
+    const data = JSON.parse(responseText);
+    const reply = data.content?.[0]?.text || data.debug || data.error || "Немає відповіді";
+
     const t = document.getElementById('typingIndicator');
     if (t) t.remove();
-    const aMsg = { role:'assistant', content: reply };
+    const aMsg = {role:'assistant', content:reply};
     active.messages.push(aMsg);
     addBubble(aMsg);
     renderContacts();
   } catch(e) {
+    console.error("Error:", e);
     const t = document.getElementById('typingIndicator');
     if (t) t.remove();
-    addBubble({ role:'assistant', content: '⚠️ Помилка: ' + e.message });
+    addBubble({role:'assistant', content:'⚠️ '+e.message});
   }
   document.getElementById('sendBtn').disabled = false;
 }
@@ -293,11 +274,11 @@ function goBack() {
 }
 
 document.getElementById('messageInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 });
 document.getElementById('messageInput').addEventListener('input', function() {
   this.style.height = 'auto';
-  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  this.style.height = Math.min(this.scrollHeight,120)+'px';
 });
 
 renderContacts();
