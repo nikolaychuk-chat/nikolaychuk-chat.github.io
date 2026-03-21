@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Ніколайчук Месенджер</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -32,8 +32,8 @@ body.bubbles-none .message.in .msg-bubble{border-left:3px solid var(--text-dim);
 ::-webkit-scrollbar-thumb:hover{background:var(--accent);opacity:.7;}
 *{scrollbar-width:thin;scrollbar-color:var(--scroll-thumb) var(--scroll-track);}
 
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:var(--fs);}
-.main-content{display:flex;flex:1;overflow:hidden;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;font-size:var(--fs);}
+.main-content{display:flex;flex:1;overflow:hidden;min-height:0;}
 
 /* BOTTOM NAV */
 .bottom-nav{display:flex;border-top:1px solid var(--border);background:var(--sidebar-bg);flex-shrink:0;z-index:100;}
@@ -208,12 +208,13 @@ body.theme-light .msg-time{color:rgba(0,0,0,.35);}
 .danger-btn{background:rgba(229,57,53,.12);border:1px solid rgba(229,57,53,.25);color:var(--danger);border-radius:12px;padding:12px 16px;font-size:14px;cursor:pointer;font-family:inherit;transition:background .15s;text-align:left;width:100%;}
 .danger-btn:hover{background:rgba(229,57,53,.22);}
 
-@media(max-width:640px){
-  .main-content{position:relative;}
-  .sidebar{width:100%;min-width:unset;position:absolute;inset:0;z-index:10;display:flex;}
+@media(max-width:768px){
+  .main-content{position:relative;overflow:hidden;}
+  .sidebar{width:100%;min-width:unset;position:absolute;top:0;left:0;right:0;bottom:0;z-index:10;display:flex;flex-direction:column;}
   .sidebar.hidden{display:none!important;}
-  .chat-area{position:absolute;inset:0;z-index:5;display:flex;}
-  .info-panel{position:absolute;inset:0;z-index:20;width:100%!important;}
+  .chat-area{position:absolute;top:0;left:0;right:0;bottom:0;z-index:5;}
+  .info-panel{position:absolute;top:0;left:0;right:0;bottom:0;z-index:20;width:100%!important;display:none;}
+  .info-panel.open{display:flex;}
   .back-btn{display:flex!important;}
   .stats-grid{grid-template-columns:1fr 1fr;}
   .emoji-picker{width:calc(100vw - 24px);left:12px;}
