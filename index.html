@@ -209,12 +209,14 @@ body.theme-light .msg-time{color:rgba(0,0,0,.35);}
 .danger-btn:hover{background:rgba(229,57,53,.22);}
 
 @media(max-width:640px){
-  .sidebar{width:100%;min-width:unset;position:absolute;top:0;left:0;right:0;bottom:52px;z-index:10;}
-  .sidebar.hidden{display:none;}
-  .chat-area{width:100%;}
-  .info-panel{position:absolute;top:0;left:0;right:0;bottom:52px;z-index:20;width:100%!important;}
+  .main-content{position:relative;}
+  .sidebar{width:100%;min-width:unset;position:absolute;inset:0;z-index:10;display:flex;}
+  .sidebar.hidden{display:none!important;}
+  .chat-area{position:absolute;inset:0;z-index:5;display:flex;}
+  .info-panel{position:absolute;inset:0;z-index:20;width:100%!important;}
   .back-btn{display:flex!important;}
   .stats-grid{grid-template-columns:1fr 1fr;}
+  .emoji-picker{width:calc(100vw - 24px);left:12px;}
 }
 .back-btn{display:none;}
 </style>
